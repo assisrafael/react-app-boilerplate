@@ -4,15 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently 'npm run watch' 'npm run start:ssr'",
-    "start:ssr": "node src/server.js",
-    "watch": "webpack serve --mode development",
-    "build": "webpack --mode development"
+    "start": "concurrently 'npm run watch:ssr' 'npm run serve:ssr' 'npm run watch:csr'",
+    "serve:ssr": "node src/server.js",
+    "watch:csr": "webpack serve --config webpack.csr.config.js",
+    "watch:ssr": "webpack watch --config webpack.ssr.config.js",
+    "build": "NODE_ENV=production webpack"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "lodash": "^4.17.21",
     "morgan": "^1.10.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
@@ -21,9 +23,11 @@
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-react": "^7.14.5",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "babel-loader": "^8.2.2",
     "concurrently": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
+    "react-refresh": "^0.9.0",
     "webpack": "^5.44.0",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2"
