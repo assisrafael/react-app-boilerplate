@@ -10,15 +10,15 @@ A boilerplate for starting a new react app with SSR, webpack and fast-refresh
 
 ## How to use it
 
-After installing the dependencies `npm install` you can start everything with a single command:
+After installing the dependencies with `npm install`, you can start everything by running:
 
 ```
 npm start
 ```
 
-which will start webpack dev server on `localhost:3000` which will proxy SSR to the express server started on port `9000`.
+which will start webpack dev server on `localhost:3000` and it will proxy SSR requests to the express server started on `localhost:9000`.
 
-To generate a production build:
+To generate a production build run:
 
 ```
 npm run build
