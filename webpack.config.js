@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const jsRule = {
-  test: /\.m?js$/,
+  test: /\.jsx?$/,
   exclude: /node_modules/,
   use: {
     loader: "babel-loader",
@@ -10,6 +10,7 @@ const jsRule = {
     },
   },
 };
+const resolveExtensions = [".js", ".jsx", ".json", ".wasm"];
 
 module.exports = [
   {
@@ -18,10 +19,31 @@ module.exports = [
     },
     target: "web",
     devtool: false,
+    devServer: {
+      port: 3000,
+      writeToDisk: true,
+      clientLogLevel: "debug",
+      index: "",
+      proxy: [
+        {
+          context: ["/**", "!.js"],
+          target: "http://localhost:9000",
+          logLevel: "debug",
+        },
+      ],
+    },
     module: {
       rules: [jsRule],
     },
-    plugins: [new HtmlWebpackPlugin()],
+    resolve: {
+      extensions: resolveExtensions,
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: "My App",
+        template: "src/frontend/template.html",
+      }),
+    ],
   },
   {
     entry: {
@@ -34,6 +56,9 @@ module.exports = [
     },
     module: {
       rules: [jsRule],
+    },
+    resolve: {
+      extensions: resolveExtensions,
     },
   },
 ];

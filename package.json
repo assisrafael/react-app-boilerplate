@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "concurrently 'npm run watch' 'npm run start:ssr'",
+    "start:ssr": "node src/server.js",
+    "watch": "webpack serve --mode development",
     "build": "webpack --mode development"
   },
   "author": "",
@@ -20,8 +22,10 @@
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-react": "^7.14.5",
     "babel-loader": "^8.2.2",
+    "concurrently": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
     "webpack": "^5.44.0",
-    "webpack-cli": "^4.7.2"
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   }
 }

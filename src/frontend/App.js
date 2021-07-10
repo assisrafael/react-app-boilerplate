@@ -5,5 +5,5 @@ export function App() {
     console.log("use efect");
   }, []);
 
-  return <div>Hello World from SSR and react</div>;
+  return <div>Hello World from SSR and react!</div>;
 }
