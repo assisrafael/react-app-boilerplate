@@ -1,8 +1,13 @@
 import React, { useEffect } from "react";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
+import loadable from "@loadable/component";
 
-import { AboutPage } from "./pages/AboutPage";
-import { HomePage } from "./pages/HomePage";
+const AboutPage = loadable(() =>
+  import(/* webpackChunkName: "about" */ "./pages/AboutPage")
+);
+const HomePage = loadable(() =>
+  import(/* webpackChunkName: "home" */ "./pages/HomePage")
+);
 
 export function App() {
   useEffect(() => {

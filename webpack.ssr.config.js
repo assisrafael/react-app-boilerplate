@@ -11,6 +11,7 @@ module.exports = {
   devtool: false,
   output: {
     libraryTarget: "commonjs",
+    globalObject: "global",
   },
   module: {
     rules: [defaultJsRule],
