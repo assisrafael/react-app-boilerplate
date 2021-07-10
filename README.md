@@ -15,7 +15,13 @@ After installing the dependencies `npm install` you can start everything with a 
 npm start
 ```
 
-which will start webpack dev server on `localhost:3000` which will proxy SSR to the express server started on port 9000;
+which will start webpack dev server on `localhost:3000` which will proxy SSR to the express server started on port `9000`.
+
+To generate a production build:
+
+```
+npm run build
+```
 
 ## Roadmap
 
