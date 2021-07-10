@@ -10,7 +10,7 @@ const {
 } = require("./webpack.common.config");
 
 if (isDevelopment) {
-  //TODO: enable SSR with fast-refresh
+  //enable SSR with fast-refresh
   defaultJsRule.use.options.plugins.push(
     require.resolve("react-refresh/babel")
   );
