@@ -7,8 +7,7 @@
     "start": "concurrently 'npm run watch:ssr' 'npm run serve:ssr' 'npm run watch:csr'",
     "serve:ssr": "node src/ssr/server.js",
     "watch:csr": "webpack serve --config webpack.csr.config.js",
-    "watch:ssr": "webpack watch --config webpack.ssr.config.js",
-    "build": "NODE_ENV=production webpack"
+    "watch:ssr": "webpack watch --config webpack.ssr.config.js"
   },
   "author": "",
   "license": "ISC",
