@@ -1,20 +1,11 @@
-const jsRule = {
-  test: /\.jsx?$/,
-  exclude: /node_modules/,
-  use: {
-    loader: "babel-loader",
-    options: {
-      presets: ["@babel/preset-env", "@babel/preset-react"],
-    },
-  },
-};
-const resolveExtensions = [".js", ".jsx", ".json", ".wasm"];
-const isDevelopment = process.env.NODE_ENV !== "production";
+"use strict";
+
+const { defaultJsRule, commonConfig } = require("./webpack.common.config");
 
 module.exports = {
-  mode: isDevelopment ? "development" : "production",
+  ...commonConfig,
   entry: {
-    ssr: "./src/frontend/index.ssr.js",
+    ssr: "./src/app/index.ssr.js",
   },
   target: "node",
   devtool: false,
@@ -22,9 +13,6 @@ module.exports = {
     libraryTarget: "commonjs",
   },
   module: {
-    rules: [jsRule],
-  },
-  resolve: {
-    extensions: resolveExtensions,
+    rules: [defaultJsRule],
   },
 };

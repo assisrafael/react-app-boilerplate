@@ -1,29 +1,31 @@
+"use strict";
+
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const {
+  isDevelopment,
+  defaultJsRule,
+  commonConfig,
+} = require("./webpack.common.config");
 
-const isDevelopment = process.env.NODE_ENV !== "production";
-const resolveExtensions = [".js", ".jsx", ".json", ".wasm"];
-
-const jsRule = {
-  test: /\.jsx?$/,
-  exclude: /node_modules/,
-  use: {
-    loader: "babel-loader",
-    options: {
-      plugins: [
-        // ... other plugins
-        isDevelopment && require.resolve("react-refresh/babel"),
-      ].filter(Boolean),
-      presets: ["@babel/preset-env", "@babel/preset-react"],
-    },
-  },
-};
+if (isDevelopment) {
+  //TODO: enable SSR with fast-refresh
+  defaultJsRule.use.options.plugins.push(
+    require.resolve("react-refresh/babel")
+  );
+  commonConfig.plugins.push(
+    ...[
+      new webpack.HotModuleReplacementPlugin(),
+      new ReactRefreshWebpackPlugin(),
+    ]
+  );
+}
 
 module.exports = {
-  mode: isDevelopment ? "development" : "production",
+  ...commonConfig,
   entry: {
-    app: "./src/frontend/index.js",
+    app: "./src/app/index.js",
   },
   target: "web",
   devtool: false,
@@ -46,17 +48,12 @@ module.exports = {
     ],
   },
   module: {
-    rules: [jsRule],
-  },
-  resolve: {
-    extensions: resolveExtensions,
+    rules: [defaultJsRule],
   },
   plugins: [
+    ...commonConfig.plugins,
     new HtmlWebpackPlugin({
-      title: "My App",
-      template: "src/frontend/template.html",
+      template: "src/app/template.html",
     }),
-    isDevelopment && new webpack.HotModuleReplacementPlugin(),
-    isDevelopment && new ReactRefreshWebpackPlugin(),
-  ].filter(Boolean),
+  ],
 };
