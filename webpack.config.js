@@ -11,9 +11,11 @@ const jsRule = {
   },
 };
 const resolveExtensions = [".js", ".jsx", ".json", ".wasm"];
+const isDevelopment = process.env.NODE_ENV !== "production";
 
 module.exports = [
   {
+    mode: isDevelopment ? "development" : "production",
     entry: {
       app: "./src/frontend/index.js",
     },
@@ -24,6 +26,10 @@ module.exports = [
       writeToDisk: true,
       clientLogLevel: "debug",
       index: "",
+      overlay: {
+        warnings: true,
+        errors: true,
+      },
       proxy: [
         {
           context: ["/**", "!.js"],
@@ -46,6 +52,7 @@ module.exports = [
     ],
   },
   {
+    mode: isDevelopment ? "development" : "production",
     entry: {
       ssr: "./src/frontend/index.ssr.js",
     },

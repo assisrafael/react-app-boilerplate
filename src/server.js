@@ -12,11 +12,24 @@ server.use("/**", async (req, res) => {
   }
 
   const html = (await fs.readFile("dist/index.html")).toString();
-  delete require.cache[require.resolve("../dist/ssr")];
-  const render = require("../dist/ssr").default;
+  const partialHtml = renderSSR();
 
-  res.send(html.replace('<div id="root">', `<div id="root">${render()}`));
+  res.send(html.replace('<div id="root">', `<div id="root">${partialHtml}`));
 });
+
+function renderSSR() {
+  let partialHtml = "";
+
+  try {
+    delete require.cache[require.resolve("../dist/ssr")];
+    const render = require("../dist/ssr.js").default;
+    partialHtml = render();
+  } catch (e) {
+    console.log(e);
+  }
+
+  return partialHtml;
+}
 
 const PORT = 9000;
 
