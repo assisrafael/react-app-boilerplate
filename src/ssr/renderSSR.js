@@ -6,11 +6,11 @@ const path = require("path");
 const htmlPath = path.join(__dirname, "../../dist/index.html");
 const ssrPath = path.join(__dirname, "../../dist/ssr.js");
 
-exports.renderSSR = async function renderSSR() {
+exports.renderSSR = async function renderSSR({ url }) {
   const html = (await fs.readFile(htmlPath)).toString();
 
   const render = requireFreshRender(ssrPath);
-  const partialHtml = render();
+  const partialHtml = render({ url });
 
   return html.replace('<div id="root">', `<div id="root">${partialHtml}`);
 };

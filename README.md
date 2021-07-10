@@ -6,6 +6,7 @@ A boilerplate for starting a new react app with SSR, webpack and fast-refresh
 
 - HRM with fast-refresh and webpack dev server
 - SSR with expressjs
+- App routes with react-router
 
 ## How to use it
 

@@ -15,7 +15,7 @@ server.use("/**", async (req, res, next) => {
     return res.sendStatus(404);
   }
 
-  renderSSR()
+  renderSSR({ url: req.originalUrl })
     .then((html) => {
       res.send(html);
     })
