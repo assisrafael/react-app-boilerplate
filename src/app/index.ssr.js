@@ -4,9 +4,9 @@ import { StaticRouter } from "react-router";
 
 import { App } from "./App";
 
-export default function ({ url }) {
+export default function ({ url, context }) {
   return renderToString(
-    <StaticRouter location={url}>
+    <StaticRouter location={url} context={context}>
       <App />
     </StaticRouter>
   );

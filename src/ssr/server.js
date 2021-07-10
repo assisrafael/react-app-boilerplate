@@ -16,8 +16,16 @@ server.use("/**", async (req, res, next) => {
   }
 
   renderSSR({ url: req.originalUrl })
-    .then((html) => {
-      res.send(html);
+    .then(({ html, context }) => {
+      if (context.url) {
+        res.writeHead(301, {
+          Location: context.url,
+        });
+        res.end();
+      } else {
+        res.write(html);
+        res.end();
+      }
     })
     .catch(next);
 });
