@@ -25,7 +25,7 @@ if (isDevelopment) {
 module.exports = {
   ...commonConfig,
   entry: {
-    app: "./src/app/index.js",
+    app: "./src/app/index.jsx",
   },
   target: "web",
   devtool: false,
