@@ -1,8 +1,10 @@
 "use strict";
 
+const path = require("path");
+
 const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+
 const {
   isDevelopment,
   defaultJsRule,
@@ -24,11 +26,16 @@ if (isDevelopment) {
 
 module.exports = {
   ...commonConfig,
+  name: "csr",
   entry: {
     app: "./src/app/index.jsx",
   },
   target: "web",
   devtool: false,
+  output: {
+    path: path.resolve(__dirname, "dist/client"),
+    publicPath: `/dist/client/`,
+  },
   devServer: {
     port: 3000,
     writeToDisk: true,
@@ -50,10 +57,4 @@ module.exports = {
   module: {
     rules: [defaultJsRule],
   },
-  plugins: [
-    ...commonConfig.plugins,
-    new HtmlWebpackPlugin({
-      template: "src/app/template.html",
-    }),
-  ],
 };
