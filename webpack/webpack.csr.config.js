@@ -3,6 +3,7 @@
 const path = require("path");
 
 const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 const {
@@ -10,7 +11,7 @@ const {
   defaultJsRule,
   commonConfig,
 } = require("./webpack.common.config");
-const { CSR_PORT, SSR_PORT } = require("../config");
+const { CSR_PORT, SSR_PORT, LAZY_LOAD } = require("../config");
 
 if (isDevelopment) {
   //enable SSR with fast-refresh
@@ -58,4 +59,11 @@ module.exports = {
   module: {
     rules: [defaultJsRule],
   },
+  plugins: [
+    ...commonConfig.plugins,
+    !LAZY_LOAD &&
+      new HtmlWebpackPlugin({
+        template: "src/app/template.html",
+      }),
+  ].filter(Boolean),
 };
