@@ -1,17 +1,26 @@
 "use strict";
 
+const path = require("path");
+
+const nodeExternals = require("webpack-node-externals");
+
 const { defaultJsRule, commonConfig } = require("./webpack.common.config");
 
 module.exports = {
   ...commonConfig,
+  name: "ssr",
+  target: "node",
   entry: {
     ssr: "./src/app/index.ssr.jsx",
   },
-  target: "node",
-  devtool: false,
   output: {
-    libraryTarget: "commonjs",
+    path: path.resolve(__dirname, "../dist/server"),
+    publicPath: `/dist/server/`,
+    libraryTarget: "commonjs2",
+    globalObject: "global",
   },
+  devtool: false,
+  externals: [nodeExternals()],
   module: {
     rules: [defaultJsRule],
   },

@@ -3,8 +3,8 @@
 const fs = require("fs/promises");
 const path = require("path");
 
-const htmlPath = path.join(__dirname, "../../dist/index.html");
-const ssrPath = path.join(__dirname, "../../dist/ssr.js");
+const htmlPath = path.join(__dirname, "../../dist/client/index.html");
+const ssrPath = path.join(__dirname, "../../dist/server/ssr.js");
 
 const bundle = {
   html: null,
