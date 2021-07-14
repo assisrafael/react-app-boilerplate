@@ -10,4 +10,4 @@ process.env.LAZY_LOAD = process.env.LAZY_LOAD ?? false;
 exports.isDevelopment = process.env.NODE_ENV !== "production";
 exports.SSR_PORT = process.env.SSR_PORT;
 exports.CSR_PORT = process.env.CSR_PORT;
-exports.LAZY_LOAD = process.env.LAZY_LOAD;
+exports.LAZY_LOAD = process.env.LAZY_LOAD.toLowerCase() === "true";

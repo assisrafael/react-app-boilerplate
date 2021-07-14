@@ -25,7 +25,7 @@ exports.reloadAssets = async function reloadAssets(bundle) {
   delete require.cache[require.resolve(ssrPath)];
   const render = require(ssrPath).default;
   bundle.html = html;
-  bundle.render = render;
+  bundle.SSR = render;
 };
 
 exports.reloadAssetsLazy = async function reloadAssetsLazy(bundle) {
@@ -56,8 +56,13 @@ function clearLazySSRCache() {
   }
 }
 
-exports.renderHtml = function renderHtml({ html, render }, { url, context }) {
-  const partialHtml = render({ url, context });
+exports.renderHtml = function renderHtml({ html, SSR }, { url, context }) {
+  const partialHtml = renderToString(
+    createElement(SSR, {
+      url,
+      context,
+    })
+  );
 
   return html.replace('<div id="root">', `<div id="root">${partialHtml}`);
 };

@@ -5,7 +5,7 @@ import { loadableReady } from "@loadable/component";
 
 import { App } from "./App";
 
-loadableReady(() => {
+function render() {
   hydrate(
     <React.StrictMode>
       <Router>
@@ -14,4 +14,12 @@ loadableReady(() => {
     </React.StrictMode>,
     document.getElementById("root")
   );
-});
+}
+
+if (process.env.LAZY_LOAD) {
+  loadableReady(() => {
+    render();
+  });
+} else {
+  render();
+}

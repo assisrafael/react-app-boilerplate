@@ -3,6 +3,7 @@
 const path = require("path");
 
 const nodeExternals = require("webpack-node-externals");
+const { LAZY_LOAD } = require("../config");
 
 const { defaultJsRule, commonConfig } = require("./webpack.common.config");
 
@@ -20,7 +21,9 @@ module.exports = {
     globalObject: "global",
   },
   devtool: false,
-  externals: ["@loadable/component", nodeExternals()],
+  externals: [LAZY_LOAD && "@loadable/component", nodeExternals()].filter(
+    Boolean
+  ),
   module: {
     rules: [defaultJsRule],
   },

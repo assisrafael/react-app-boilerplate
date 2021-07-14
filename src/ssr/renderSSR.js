@@ -13,8 +13,6 @@ const bundle = {};
 exports.renderSSR = async function renderSSR({ url }) {
   const context = {};
 
-  console.log("renderSSR", { LAZY_LOAD });
-
   if (!bundle.SSR) {
     //initial load
     if (LAZY_LOAD) {
@@ -32,4 +30,10 @@ exports.renderSSR = async function renderSSR({ url }) {
   };
 };
 
-exports.reloadAssets = () => reloadAssets(bundle);
+exports.reloadAssets = () => {
+  if (LAZY_LOAD) {
+    reloadAssetsLazy(bundle);
+  } else {
+    reloadAssets(bundle);
+  }
+};

@@ -3,12 +3,12 @@ import { Switch, Route, Link, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import loadable from "@loadable/component";
 
-const AboutPage = loadable(() =>
-  import(/* webpackChunkName: "about" */ "./pages/AboutPage")
-);
-const HomePage = loadable(() =>
-  import(/* webpackChunkName: "home" */ "./pages/HomePage")
-);
+const AboutPage = process.env.LAZY_LOAD
+  ? loadable(() => import(/* webpackChunkName: "about" */ "./pages/AboutPage"))
+  : require("./pages/AboutPage").default;
+const HomePage = process.env.LAZY_LOAD
+  ? loadable(() => import(/* webpackChunkName: "home" */ "./pages/HomePage"))
+  : require("./pages/HomePage").default;
 
 export function App() {
   useEffect(() => {

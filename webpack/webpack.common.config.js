@@ -5,8 +5,9 @@
  * FIXME: after new release updated package.json
  */
 const LoadablePlugin = require("@loadable/webpack-plugin");
+const webpack = require("webpack");
 
-const { isDevelopment } = require("../config");
+const { isDevelopment, LAZY_LOAD } = require("../config");
 const { CompilerHooksWebpackPlugin } = require("./CompilerHooksWebpackPlugin");
 const { invalidateSSRCache } = require("./invalidateSSRCache");
 
@@ -18,7 +19,7 @@ exports.defaultJsRule = {
   use: {
     loader: "babel-loader",
     options: {
-      plugins: ["@loadable/babel-plugin"],
+      plugins: [LAZY_LOAD && "@loadable/babel-plugin"].filter(Boolean),
       presets: ["@babel/preset-env", "@babel/preset-react"],
     },
   },
@@ -30,11 +31,14 @@ exports.commonConfig = {
     extensions: resolveExtensions,
   },
   plugins: [
-    new LoadablePlugin(),
+    new webpack.DefinePlugin({
+      "process.env.LAZY_LOAD": LAZY_LOAD,
+    }),
+    LAZY_LOAD && new LoadablePlugin(),
     new CompilerHooksWebpackPlugin({
       done() {
         invalidateSSRCache();
       },
     }),
-  ],
+  ].filter(Boolean),
 };
