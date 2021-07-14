@@ -20,11 +20,8 @@ server.use("/**", async (req, res, next) => {
     return res.sendStatus(404);
   }
 
-  const label = "SSR";
-  console.time(label);
   renderSSR({ url: req.originalUrl })
     .then(({ html, context }) => {
-      console.timeEnd(label);
       if (context.url) {
         res.writeHead(301, {
           Location: context.url,
