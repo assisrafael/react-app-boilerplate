@@ -27,15 +27,15 @@ if (isDevelopment) {
 module.exports = {
   ...commonConfig,
   name: "csr",
+  target: "web",
   entry: {
     app: "./src/app/index.jsx",
   },
-  target: "web",
-  devtool: false,
   output: {
     path: path.resolve(__dirname, "../dist/client"),
     publicPath: `/dist/client/`,
   },
+  devtool: false,
   devServer: {
     port: 3000,
     writeToDisk: true,
