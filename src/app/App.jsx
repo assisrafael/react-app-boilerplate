@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import AboutPage from "./pages/AboutPage";
 import HomePage from "./pages/HomePage";
@@ -31,17 +32,17 @@ export function App() {
         <Route path="/about">
           <AboutPage />
         </Route>
-        <RedirectWithStatus status={301} from="/company" to="/about" />
         <Route path="/" exact>
           <HomePage />
         </Route>
-        <Route component={NotFound} />
+        <RedirectWithStatusRoute status={301} from="/company" to="/about" />
+        <NotFoundRoute />
       </Switch>
     </>
   );
 }
 
-function NotFound() {
+function NotFoundRoute() {
   return (
     <Status code={404}>
       <div>
@@ -51,13 +52,18 @@ function NotFound() {
   );
 }
 
-function RedirectWithStatus({ from, to, status }) {
+function RedirectWithStatusRoute({ from, to, status }) {
   return (
     <Status code={status}>
       <Redirect from={from} to={to} />;
     </Status>
   );
 }
+RedirectWithStatusRoute.propTypes = {
+  from: PropTypes.string,
+  to: PropTypes.string,
+  status: PropTypes.number,
+};
 
 function Status({ code, children }) {
   return (
@@ -69,3 +75,7 @@ function Status({ code, children }) {
     />
   );
 }
+Status.propTypes = {
+  code: PropTypes.number,
+  children: PropTypes.node,
+};
