@@ -19,7 +19,7 @@ module.exports = {
     publicPath: `/dist/server/`,
     libraryTarget: "commonjs2",
     globalObject: "global",
-    clean: true,
+    // clean: true,
   },
   devtool: false,
   externals: [LAZY_LOAD && "@loadable/component", nodeExternals()].filter(
