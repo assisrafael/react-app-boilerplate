@@ -18,12 +18,8 @@ exports.renderSSR = async function renderSSR({ url }) {
     await reloadSSRBundle();
   }
 
-  const { html, render } = bundle;
-
-  const partialHtml = render({ url, context });
-
   return {
-    html: html.replace('<div id="root">', `<div id="root">${partialHtml}`),
+    html: renderHtml({ url, context }),
     context: context,
   };
 };
@@ -38,4 +34,12 @@ async function reloadSSRBundle() {
 
   bundle.html = html;
   bundle.render = render;
+}
+
+function renderHtml({ url, context }) {
+  const { html, render } = bundle;
+
+  const partialHtml = render({ url, context });
+
+  return html.replace('<div id="root">', `<div id="root">${partialHtml}`);
 }

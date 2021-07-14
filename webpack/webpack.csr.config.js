@@ -11,6 +11,7 @@ const {
   defaultJsRule,
   commonConfig,
 } = require("./webpack.common.config");
+const { CSR_PORT, SSR_PORT } = require("../config");
 
 if (isDevelopment) {
   //enable SSR with fast-refresh
@@ -38,7 +39,7 @@ module.exports = {
   },
   devtool: false,
   devServer: {
-    port: 3000,
+    port: CSR_PORT,
     writeToDisk: true,
     clientLogLevel: "debug",
     hot: true,
@@ -50,7 +51,7 @@ module.exports = {
     proxy: [
       {
         context: ["/**", "!.js"],
-        target: "http://localhost:9000",
+        target: `http://localhost:${SSR_PORT}`,
         logLevel: "debug",
       },
     ],

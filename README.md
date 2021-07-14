@@ -7,6 +7,7 @@ A boilerplate for starting a new react app with SSR, webpack and fast-refresh
 - HRM with fast-refresh and webpack dev server
 - SSR with expressjs
 - App routes with react-router
+- Lazy loading and code splitting [`loadable-components branch`](https://github.com/assisrafael/react-app-boilerplate/pull/1)
 
 ## How to use it
 
@@ -24,9 +25,17 @@ To generate a production build run:
 npm run build
 ```
 
+## How to customize it
+
+You can change CSR and SSR ports with a `.env` file in the root of this repository:
+
+```
+CSR_PORT=3000
+SSR_PORT=9000
+```
+
 ## Roadmap
 
-- [ ] Lazy load and code splitting
 - [ ] Source maps
 - [ ] Production build with optimizations
 - [ ] Service worker

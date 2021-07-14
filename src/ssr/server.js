@@ -2,15 +2,15 @@
 
 const express = require("express");
 const morgan = require("morgan");
+const { SSR_PORT } = require("../../config");
 
 const { renderSSR, reloadSSRBundle } = require("./renderSSR");
 
-const PORT = process.env.PORT || 9000;
 const server = express();
 
 server.use(morgan("dev"));
 
-server.use("/invalidate-ssr", (req, res) => {
+server.use("/api/ssr/invalidate", (req, res) => {
   reloadSSRBundle();
   res.sendStatus(200);
 });
@@ -26,15 +26,15 @@ server.use("/**", async (req, res, next) => {
         res.writeHead(301, {
           Location: context.url,
         });
-        res.end();
       } else {
+        res.set("Content-Type", "text/html");
         res.write(html);
-        res.end();
       }
+      res.end();
     })
     .catch(next);
 });
 
-server.listen(PORT, () => {
-  console.log("server listening on port ", PORT);
+server.listen(SSR_PORT, () => {
+  console.log("server listening on port ", SSR_PORT);
 });

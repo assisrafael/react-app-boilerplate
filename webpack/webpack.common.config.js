@@ -1,12 +1,10 @@
 "use strict";
 
+const { isDevelopment } = require("../config");
 const { CompilerHooksWebpackPlugin } = require("./CompilerHooksWebpackPlugin");
 const { invalidateSSRCache } = require("./invalidateSSRCache");
 
-const isDevelopment = process.env.NODE_ENV !== "production";
 const resolveExtensions = [".js", ".jsx", ".json", ".wasm"];
-
-exports.isDevelopment = isDevelopment;
 
 exports.defaultJsRule = {
   test: /\.jsx?$/,
