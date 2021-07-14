@@ -2,14 +2,16 @@
 
 const http = require("http");
 
+const { SSR_PORT } = require("../config");
+
 exports.invalidateSSRCache = function invalidateSSRCache() {
   setTimeout(() => {
     console.log("!! Invalidating SSR cache");
     const req = http.request(
       {
         hostname: "localhost",
-        port: 9000,
-        path: "/invalidate-ssr",
+        port: SSR_PORT,
+        path: "/api/ssr/invalidate",
         method: "GET",
       },
       (res) => {
