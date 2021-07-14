@@ -6,12 +6,8 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
-const {
-  isDevelopment,
-  defaultJsRule,
-  commonConfig,
-} = require("./webpack.common.config");
-const { CSR_PORT, SSR_PORT, LAZY_LOAD } = require("../config");
+const { defaultJsRule, commonConfig } = require("./webpack.common.config");
+const { CSR_PORT, SSR_PORT, LAZY_LOAD, isDevelopment } = require("../config");
 
 if (isDevelopment) {
   //enable SSR with fast-refresh
