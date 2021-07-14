@@ -6,11 +6,11 @@
   "scripts": {
     "start": "concurrently 'npm run watch:ssr' 'npm run serve:ssr' 'npm run watch:csr'",
     "serve:ssr": "node src/ssr/server.js",
-    "watch:csr": "webpack serve --config webpack.csr.config.js",
-    "watch:ssr": "webpack watch --config webpack.ssr.config.js",
+    "watch:csr": "webpack serve --config webpack/webpack.csr.config.js",
+    "watch:ssr": "webpack watch --config webpack/webpack.ssr.config.js",
     "build": "npm run build:ssr && npm run build:csr",
-    "build:csr": "NODE_ENV=production webpack --config webpack.csr.config.js",
-    "build:ssr": "NODE_ENV=production webpack --config webpack.ssr.config.js",
+    "build:csr": "NODE_ENV=production webpack --config webpack/webpack.csr.config.js",
+    "build:ssr": "NODE_ENV=production webpack --config webpack/webpack.ssr.config.js",
     "lint": "eslint --ext js,jsx .",
     "lint:fix": "eslint --ext js,jsx --fix ."
   },
