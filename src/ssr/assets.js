@@ -56,7 +56,7 @@ exports.LazyLoadRenderer = class LazyLoadRenderer {
   }
 
   isLoaded() {
-    return Boolean(this.webExtractor && this.SSR);
+    return Boolean(this.SSR);
   }
 
   clearAssetsCache() {
@@ -78,17 +78,16 @@ exports.LazyLoadRenderer = class LazyLoadRenderer {
     });
     const { default: SSR } = nodeExtractor.requireEntrypoint();
 
+    this.SSR = SSR;
+  }
+
+  renderStaticHtml({ url, context }) {
     const webExtractor = new ChunkExtractor({
       statsFile: this.csrStatsFile,
       entrypoints: ["app"],
     });
 
-    this.webExtractor = webExtractor;
-    this.SSR = SSR;
-  }
-
-  renderStaticHtml({ url, context }) {
-    const jsx = this.webExtractor.collectChunks(
+    const jsx = webExtractor.collectChunks(
       createElement(this.SSR, {
         url,
         context,
@@ -99,12 +98,12 @@ exports.LazyLoadRenderer = class LazyLoadRenderer {
       <!DOCTYPE html>
       <html>
         <head>
-        ${this.webExtractor.getLinkTags()}
-        ${this.webExtractor.getStyleTags()}
+        ${webExtractor.getLinkTags()}
+        ${webExtractor.getStyleTags()}
         </head>
         <body>
           <div id="root">${renderToString(jsx)}</div>
-          ${this.webExtractor.getScriptTags()}
+          ${webExtractor.getScriptTags()}
         </body>
       </html>
     `;
