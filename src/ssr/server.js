@@ -4,14 +4,14 @@ const express = require("express");
 const morgan = require("morgan");
 const { SSR_PORT } = require("../../config");
 
-const { renderSSR, reloadSSRBundle } = require("./renderSSR");
+const { renderSSR, reloadAssets } = require("./renderSSR");
 
 const server = express();
 
 server.use(morgan("dev"));
 
 server.use("/api/ssr/invalidate", (req, res) => {
-  reloadSSRBundle();
+  reloadAssets();
   res.sendStatus(200);
 });
 

@@ -11,7 +11,7 @@ const {
   defaultJsRule,
   commonConfig,
 } = require("./webpack.common.config");
-const { CSR_PORT, SSR_PORT } = require("../config");
+const { CSR_PORT, SSR_PORT, LAZY_LOAD } = require("../config");
 
 if (isDevelopment) {
   //enable SSR with fast-refresh
@@ -36,6 +36,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "../dist/client"),
     publicPath: `/dist/client/`,
+    clean: true,
   },
   devtool: false,
   devServer: {
@@ -61,8 +62,9 @@ module.exports = {
   },
   plugins: [
     ...commonConfig.plugins,
-    new HtmlWebpackPlugin({
-      template: "src/app/template.html",
-    }),
-  ],
+    !LAZY_LOAD &&
+      new HtmlWebpackPlugin({
+        template: "src/app/template.html",
+      }),
+  ].filter(Boolean),
 };

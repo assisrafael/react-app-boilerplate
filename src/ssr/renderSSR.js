@@ -1,45 +1,24 @@
 "use strict";
 
-const fs = require("fs/promises");
-const path = require("path");
+const { LAZY_LOAD } = require("../../config");
+const { LazyLoadRenderer, SingleEntryRenderer } = require("./assets");
 
-const htmlPath = path.join(__dirname, "../../dist/client/index.html");
-const ssrPath = path.join(__dirname, "../../dist/server/ssr.js");
-
-const bundle = {
-  html: null,
-  render: null,
-};
+const renderer = LAZY_LOAD ? new LazyLoadRenderer() : new SingleEntryRenderer();
 
 exports.renderSSR = async function renderSSR({ url }) {
   const context = {};
 
-  if (!bundle.render) {
-    await reloadSSRBundle();
+  if (!renderer.isLoaded()) {
+    //initial load
+    renderer.reloadAssets();
   }
 
   return {
-    html: renderHtml({ url, context }),
+    html: renderer.renderStaticHtml({ url, context }),
     context: context,
   };
 };
 
-exports.reloadSSRBundle = reloadSSRBundle;
-
-async function reloadSSRBundle() {
-  const html = (await fs.readFile(htmlPath)).toString();
-
-  delete require.cache[require.resolve(ssrPath)];
-  const render = require(ssrPath).default;
-
-  bundle.html = html;
-  bundle.render = render;
-}
-
-function renderHtml({ url, context }) {
-  const { html, render } = bundle;
-
-  const partialHtml = render({ url, context });
-
-  return html.replace('<div id="root">', `<div id="root">${partialHtml}`);
-}
+exports.reloadAssets = () => {
+  renderer.reloadAssets();
+};
