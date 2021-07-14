@@ -1,39 +1,24 @@
 "use strict";
 
 const { LAZY_LOAD } = require("../../config");
-const {
-  reloadAssetsLazy,
-  reloadAssets,
-  renderHtml,
-  renderHtmlLazy,
-} = require("./assets");
+const { LazyLoadRenderer, SingleEntryRenderer } = require("./assets");
 
-const bundle = {};
+const renderer = LAZY_LOAD ? new LazyLoadRenderer() : new SingleEntryRenderer();
 
 exports.renderSSR = async function renderSSR({ url }) {
   const context = {};
 
-  if (!bundle.SSR) {
+  if (!renderer.isLoaded()) {
     //initial load
-    if (LAZY_LOAD) {
-      await reloadAssetsLazy(bundle);
-    } else {
-      await reloadAssets(bundle);
-    }
+    renderer.reloadAssets();
   }
 
   return {
-    html: LAZY_LOAD
-      ? renderHtmlLazy(bundle, { url, context })
-      : renderHtml(bundle, { url, context }),
+    html: renderer.renderStaticHtml({ url, context }),
     context: context,
   };
 };
 
 exports.reloadAssets = () => {
-  if (LAZY_LOAD) {
-    reloadAssetsLazy(bundle);
-  } else {
-    reloadAssets(bundle);
-  }
+  renderer.reloadAssets();
 };
