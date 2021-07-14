@@ -33,7 +33,7 @@
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-react": "^7.14.5",
     "@loadable/babel-plugin": "^5.13.2",
-    "@loadable/webpack-plugin": "^5.15.0",
+    "@loadable/webpack-plugin": "depoulo/loadable-components#@loadable/webpack-plugin/cached-assets-770/5.15.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "babel-loader": "^8.2.2",
     "concurrently": "^6.2.0",

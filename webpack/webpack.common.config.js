@@ -1,5 +1,9 @@
 "use strict";
 
+/*
+ * Right now using https://github.com/gregberge/loadable-components/pull/778
+ * FIXME: after new release updated package.json
+ */
 const LoadablePlugin = require("@loadable/webpack-plugin");
 
 const { CompilerHooksWebpackPlugin } = require("./CompilerHooksWebpackPlugin");

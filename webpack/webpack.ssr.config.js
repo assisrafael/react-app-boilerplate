@@ -17,7 +17,7 @@ module.exports = {
   output: {
     libraryTarget: "commonjs2",
     globalObject: "global",
-    path: path.resolve(__dirname, "dist/server"),
+    path: path.resolve(__dirname, "../dist/server"),
     publicPath: `/dist/server/`,
   },
   externals: ["@loadable/component", nodeExternals()],

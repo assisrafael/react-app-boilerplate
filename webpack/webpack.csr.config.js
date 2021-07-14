@@ -33,7 +33,7 @@ module.exports = {
   target: "web",
   devtool: false,
   output: {
-    path: path.resolve(__dirname, "dist/client"),
+    path: path.resolve(__dirname, "../dist/client"),
     publicPath: `/dist/client/`,
   },
   devServer: {
