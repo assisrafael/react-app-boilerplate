@@ -1,7 +1,7 @@
 {
-  "name": "ssr2",
+  "name": "react-app-boilerplate",
   "version": "1.0.0",
-  "description": "",
+  "description": "A boilerplate for starting a new react app with SSR, webpack, fast-refresh and more",
   "main": "index.js",
   "scripts": {
     "start": "concurrently 'npm run watch:ssr' 'npm run serve:ssr' 'npm run watch:csr'",
@@ -10,9 +10,11 @@
     "watch:ssr": "webpack watch --config webpack.ssr.config.js",
     "build": "npm run build:ssr && npm run build:csr",
     "build:csr": "NODE_ENV=production webpack --config webpack.csr.config.js",
-    "build:ssr": "NODE_ENV=production webpack --config webpack.ssr.config.js"
+    "build:ssr": "NODE_ENV=production webpack --config webpack.ssr.config.js",
+    "lint": "eslint --ext js,jsx .",
+    "lint:fix": "eslint --ext js,jsx --fix ."
   },
-  "author": "",
+  "author": "Igor Rafael",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
@@ -30,6 +32,9 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "babel-loader": "^8.2.2",
     "concurrently": "^6.2.0",
+    "eslint": "^7.30.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "html-webpack-plugin": "^5.3.2",
     "react-refresh": "^0.9.0",
     "schema-utils": "^3.1.0",
