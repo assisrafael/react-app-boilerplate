@@ -3,12 +3,17 @@
 const express = require("express");
 const morgan = require("morgan");
 
-const { renderSSR } = require("./renderSSR");
+const { renderSSR, reloadSSRBundle } = require("./renderSSR");
 
 const PORT = process.env.PORT || 9000;
 const server = express();
 
 server.use(morgan("dev"));
+
+server.use("/invalidate-ssr", (req, res) => {
+  reloadSSRBundle();
+  res.sendStatus(200);
+});
 
 server.use("/**", async (req, res, next) => {
   if (/\.[a-z]+/.test(req.originalUrl)) {

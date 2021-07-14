@@ -15,22 +15,22 @@ const csrStatsFile = path.join(
   __dirname,
   "../../dist/client/loadable-stats.json"
 );
-const mainFile = path.join(__dirname, "../../dist/server/main.js");
+
+const bundle = {
+  webExtractor: null,
+  SSR: null,
+};
 
 exports.renderSSR = async function renderSSR({ url }) {
   const context = {};
 
-  clearCachedFiles();
-  const nodeExtractor = new ChunkExtractor({
-    statsFile: ssrStatsFile,
-    entrypoints: ["ssr"],
-  });
-  const { default: SSR } = nodeExtractor.requireEntrypoint();
+  if (!bundle.SSR) {
+    //initial load
+    await reloadSSRBundle();
+  }
 
-  const webExtractor = new ChunkExtractor({
-    statsFile: csrStatsFile,
-    entrypoints: ["app"],
-  });
+  const { webExtractor, SSR } = bundle;
+
   const jsx = webExtractor.collectChunks(
     createElement(SSR, {
       url,
@@ -58,7 +58,27 @@ exports.renderSSR = async function renderSSR({ url }) {
   };
 };
 
-function clearCachedFiles() {
+exports.reloadSSRBundle = reloadSSRBundle;
+
+async function reloadSSRBundle() {
+  clearSSRCache();
+
+  const nodeExtractor = new ChunkExtractor({
+    statsFile: ssrStatsFile,
+    entrypoints: ["ssr"],
+  });
+  const { default: SSR } = nodeExtractor.requireEntrypoint();
+
+  const webExtractor = new ChunkExtractor({
+    statsFile: csrStatsFile,
+    entrypoints: ["app"],
+  });
+
+  bundle.webExtractor = webExtractor;
+  bundle.SSR = SSR;
+}
+
+function clearSSRCache() {
   const ssrFilesCache = Object.keys(require.cache).filter((name) =>
     name.includes("dist/server")
   );

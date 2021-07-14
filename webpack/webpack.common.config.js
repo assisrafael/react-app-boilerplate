@@ -2,6 +2,9 @@
 
 const LoadablePlugin = require("@loadable/webpack-plugin");
 
+const { CompilerHooksWebpackPlugin } = require("./CompilerHooksWebpackPlugin");
+const { invalidateSSRCache } = require("./invalidateSSRCache");
+
 const isDevelopment = process.env.NODE_ENV !== "production";
 const resolveExtensions = [".js", ".jsx", ".json", ".wasm"];
 
@@ -24,5 +27,12 @@ exports.commonConfig = {
   resolve: {
     extensions: resolveExtensions,
   },
-  plugins: [new LoadablePlugin()],
+  plugins: [
+    new LoadablePlugin(),
+    new CompilerHooksWebpackPlugin({
+      done() {
+        invalidateSSRCache();
+      },
+    }),
+  ],
 };
