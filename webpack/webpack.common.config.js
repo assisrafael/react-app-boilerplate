@@ -37,7 +37,9 @@ exports.commonConfig = {
     LAZY_LOAD && new LoadablePlugin(),
     new CompilerHooksWebpackPlugin({
       done() {
-        invalidateSSRCache();
+        if (isDevelopment) {
+          invalidateSSRCache();
+        }
       },
     }),
   ].filter(Boolean),

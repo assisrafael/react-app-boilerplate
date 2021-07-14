@@ -36,6 +36,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "../dist/client"),
     publicPath: `/dist/client/`,
+    clean: true,
   },
   devtool: false,
   devServer: {
