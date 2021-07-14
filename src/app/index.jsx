@@ -17,9 +17,7 @@ function render() {
 }
 
 if (process.env.LAZY_LOAD) {
-  loadableReady(() => {
-    render();
-  });
+  loadableReady(() => render());
 } else {
   render();
 }
