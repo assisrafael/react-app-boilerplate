@@ -1,5 +1,5 @@
 import React from "react";
 
-export function AboutPage() {
+export default function AboutPage() {
   return <div>About Page</div>;
 }

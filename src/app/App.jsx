@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
 
-import { AboutPage } from "./pages/AboutPage";
-import { HomePage } from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+import HomePage from "./pages/HomePage";
 
 export function App() {
   useEffect(() => {
