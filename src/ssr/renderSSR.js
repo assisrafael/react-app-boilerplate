@@ -10,7 +10,7 @@ exports.renderSSR = async function renderSSR({ url }) {
 
   if (!renderer.isLoaded()) {
     //initial load
-    renderer.reloadAssets();
+    renderer.loadAssets();
   }
 
   return {
@@ -20,5 +20,5 @@ exports.renderSSR = async function renderSSR({ url }) {
 };
 
 exports.reloadAssets = () => {
-  renderer.reloadAssets();
+  renderer.clearAssetsCache();
 };

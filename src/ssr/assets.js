@@ -17,10 +17,12 @@ exports.SingleEntryRenderer = class SingleEntryRenderer {
     return Boolean(this.html && this.SSR);
   }
 
+  clearAssetsCache() {
+    delete require.cache[require.resolve(this.ssrPath)];
+  }
+
   async reloadAssets() {
     const html = (await fs.readFile(this.htmlPath)).toString();
-
-    delete require.cache[require.resolve(this.ssrPath)];
     const render = require(this.ssrPath).default;
 
     this.html = html;
@@ -69,9 +71,7 @@ exports.LazyLoadRenderer = class LazyLoadRenderer {
     }
   }
 
-  reloadAssets() {
-    this.clearAssetsCache();
-
+  loadAssets() {
     const nodeExtractor = new ChunkExtractor({
       statsFile: this.ssrStatsFile,
       entrypoints: ["ssr"],
