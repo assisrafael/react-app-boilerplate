@@ -94,16 +94,22 @@ exports.LazyLoadRenderer = class LazyLoadRenderer {
       })
     );
 
+    const html = renderToString(jsx);
+
+    const linkTags = webExtractor.getLinkTags();
+    const styleTags = webExtractor.getStyleTags();
+    const scriptTags = webExtractor.getScriptTags();
+
     return `
       <!DOCTYPE html>
       <html>
         <head>
-        ${webExtractor.getLinkTags()}
-        ${webExtractor.getStyleTags()}
+        ${linkTags}
+        ${styleTags}
         </head>
         <body>
-          <div id="root">${renderToString(jsx)}</div>
-          ${webExtractor.getScriptTags()}
+          <div id="root">${html}</div>
+          ${scriptTags}
         </body>
       </html>
     `;

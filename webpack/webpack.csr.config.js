@@ -37,7 +37,10 @@ module.exports = {
   devtool: false,
   devServer: {
     port: CSR_PORT,
-    writeToDisk: true,
+    writeToDisk(filename) {
+      //only loadable-stats.json need to be written to the disk
+      return filename.endsWith("loadable-stats.json");
+    },
     clientLogLevel: "debug",
     hot: true,
     index: "",
